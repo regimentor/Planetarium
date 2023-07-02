@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 create table relationships (
     id serial primary key,
-    user_id integer not null,
+    alien_id integer not null,
     target_id integer not null,
     status integer not null,
 

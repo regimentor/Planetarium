@@ -2,15 +2,27 @@ package services
 
 import (
 	"context"
+
+	"github.com/regimentor/planetarium/backend/services/aliens/internal"
 	"github.com/regimentor/planetarium/backend/services/aliens/pkg/api"
 )
 
-type ManagerService struct {
-	api.UnimplementedManagerServiceServer
+type AliensRepository interface {
+	Create(ctx context.Context, dto *internal.CreateAlienDto) (*internal.Alien, error)
+	Update(ctx context.Context, dto *internal.UpdateAlienDto) (*internal.Alien, error)
+	GetByUsername(ctx context.Context, username string) (*internal.Alien, error)
 }
 
-func NewManagerService() *ManagerService {
-	return &ManagerService{}
+type ManagerService struct {
+	api.UnimplementedManagerServiceServer
+
+	repository AliensRepository
+}
+
+func NewManagerService(repository AliensRepository) *ManagerService {
+	return &ManagerService{
+		repository: repository,
+	}
 }
 
 func (m ManagerService) Create(ctx context.Context, request *api.CreateAlienRequest) (*api.CreateAlienResponse, error) {
