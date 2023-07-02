@@ -1,0 +1,4 @@
+apiVersion: v2
+name: gateway
+description: Gateway is entrypoint for planetarium
+version: 0.1.0

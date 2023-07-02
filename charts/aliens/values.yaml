@@ -1,0 +1,6 @@
+service:
+  image: planetarium/aliens
+  replicationCount: 1
+  name: aliens
+  containerPort: 8080
+  port: 8080

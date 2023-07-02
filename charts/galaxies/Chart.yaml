@@ -1,0 +1,4 @@
+apiVersion: v2
+name: galaxies
+description: Galaxies is service for create galaxies
+version: 0.1.0

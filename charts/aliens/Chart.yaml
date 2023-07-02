@@ -1,0 +1,4 @@
+apiVersion: v2
+name: aliens
+description: Aliens is service for create aliens
+version: 0.1.0

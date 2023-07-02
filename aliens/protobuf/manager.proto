@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package api;
+option go_package = "pkg/api";
+
+
+message CreateAlienRequest {
+  string username = 1;
+
+  string email = 2;
+  string confirmEmail = 3;
+
+  string password = 4;
+  string confirmPassword = 5;
+}
+
+message UpdateAlienRequest {
+  string description = 1;
+}
+
+message UpdateAlienResponse {
+  string message = 1;
+}
+
+message CreateAlienResponse {
+  string message = 1;
+}
+
+message FindAlienRequest {
+  string username = 1;
+}
+
+message FindAlienResponse {
+  string username = 1;
+  string description = 2;
+}
+
+
+service ManagerService {
+  rpc Create (CreateAlienRequest) returns (CreateAlienResponse);
+  rpc Update (UpdateAlienRequest) returns (UpdateAlienResponse);
+  rpc Find (FindAlienRequest) returns (FindAlienResponse);
+}
+

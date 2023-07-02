@@ -1,0 +1,4 @@
+apiVersion: v2
+name: stars
+description: Stars is service for create stars
+version: 0.1.0

@@ -1,0 +1,6 @@
+service:
+  image: planetarium/galaxies
+  replicationCount: 1
+  name: galaxies
+  containerPort: 8090
+  port: 8090

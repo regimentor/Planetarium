@@ -1,0 +1,18 @@
+apiVersion: v2
+name: planetarium
+description: Planetarium is application for people communications
+version: 0.1.0
+
+dependencies:
+  - name: aliens
+    version: 0.1.0
+    repository: file://./charts/aliens
+  - name: galaxies
+    version: 0.1.0
+    repository: file://./charts/galaxies
+  - name: stars
+    version: 0.1.0
+    repository: file://./charts/stars
+  - name: gateway
+    version: 0.1.0
+    repository: file://./charts/gateway

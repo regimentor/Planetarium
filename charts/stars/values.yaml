@@ -1,0 +1,6 @@
+service:
+  image: planetarium/stars
+  replicationCount: 1
+  name: stars
+  containerPort: 9010
+  port: 9010

@@ -1,0 +1,6 @@
+service:
+  image: planetarium/gateway
+  replicationCount: 1
+  name: gateway
+  containerPort: 9000
+  port: 9000

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package api;
+option go_package = "pkg/api";
+
+message CreateRelationRequestRequest {
+  int64 user_id = 1;
+  int64 target_id = 2;
+}
+
+message CreateRelationRequestResponse {
+  int64 id = 1;
+  int64 user_id = 2;
+  int64 target_id = 3;
+}
+
+message SubmitRelationRequest {
+  int64 id = 1;
+}
+
+message SubmitRelationResponse {
+  int64 id = 1;
+}
+
+message DeclineRelationRequest {
+  int64 id = 1;
+}
+
+message DeclineRelationResponse {
+  int64 id = 1;
+}
+
+message GetRelationsRequestResponse {
+  message Relation {
+    int64 id = 1;
+    enum status {
+      PENDING = 0;
+      ACCEPTED = 1;
+      DECLINED = 2;
+    }
+    message To {
+      int64 id = 1;
+      string username = 2;
+      string description = 3;
+    }
+  }
+
+  repeated Relation relations = 1;
+}
+
+message GetRelationsRequestRequest {
+  int64 user_id = 1;
+}
+
+message GetRelationsRequest {
+  int64 id = 1;
+}
+
+message GetRelationsResponse {
+  message Aliens {
+    int64 id = 1;
+    string username = 2;
+    string description = 3;
+  }
+
+  repeated Aliens aliens = 1;
+}
+
+service RelationService {
+  rpc Create(CreateRelationRequestRequest) returns (CreateRelationRequestResponse);
+  rpc Submit(SubmitRelationRequest) returns (SubmitRelationResponse);
+  rpc Decline(DeclineRelationRequest) returns (DeclineRelationResponse);
+  rpc GetRequests(GetRelationsRequestRequest) returns (GetRelationsRequestResponse);
+  rpc Get(GetRelationsRequest) returns (GetRelationsResponse);
+}
