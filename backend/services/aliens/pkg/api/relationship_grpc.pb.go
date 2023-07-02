@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RelationService_Create_FullMethodName  = "/api.RelationService/Create"
-	RelationService_Submit_FullMethodName  = "/api.RelationService/Submit"
-	RelationService_Decline_FullMethodName = "/api.RelationService/Decline"
+	RelationService_Create_FullMethodName      = "/api.RelationService/Create"
+	RelationService_Submit_FullMethodName      = "/api.RelationService/Submit"
+	RelationService_Decline_FullMethodName     = "/api.RelationService/Decline"
+	RelationService_GetRequests_FullMethodName = "/api.RelationService/GetRequests"
+	RelationService_Get_FullMethodName         = "/api.RelationService/Get"
 )
 
 // RelationServiceClient is the client API for RelationService service.
@@ -31,6 +33,8 @@ type RelationServiceClient interface {
 	Create(ctx context.Context, in *CreateRelationRequestRequest, opts ...grpc.CallOption) (*CreateRelationRequestResponse, error)
 	Submit(ctx context.Context, in *SubmitRelationRequest, opts ...grpc.CallOption) (*SubmitRelationResponse, error)
 	Decline(ctx context.Context, in *DeclineRelationRequest, opts ...grpc.CallOption) (*DeclineRelationResponse, error)
+	GetRequests(ctx context.Context, in *GetRelationsRequestRequest, opts ...grpc.CallOption) (*GetRelationsRequestResponse, error)
+	Get(ctx context.Context, in *GetRelationsRequest, opts ...grpc.CallOption) (*GetRelationsResponse, error)
 }
 
 type relationServiceClient struct {
@@ -68,6 +72,24 @@ func (c *relationServiceClient) Decline(ctx context.Context, in *DeclineRelation
 	return out, nil
 }
 
+func (c *relationServiceClient) GetRequests(ctx context.Context, in *GetRelationsRequestRequest, opts ...grpc.CallOption) (*GetRelationsRequestResponse, error) {
+	out := new(GetRelationsRequestResponse)
+	err := c.cc.Invoke(ctx, RelationService_GetRequests_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *relationServiceClient) Get(ctx context.Context, in *GetRelationsRequest, opts ...grpc.CallOption) (*GetRelationsResponse, error) {
+	out := new(GetRelationsResponse)
+	err := c.cc.Invoke(ctx, RelationService_Get_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RelationServiceServer is the server API for RelationService service.
 // All implementations must embed UnimplementedRelationServiceServer
 // for forward compatibility
@@ -75,6 +97,8 @@ type RelationServiceServer interface {
 	Create(context.Context, *CreateRelationRequestRequest) (*CreateRelationRequestResponse, error)
 	Submit(context.Context, *SubmitRelationRequest) (*SubmitRelationResponse, error)
 	Decline(context.Context, *DeclineRelationRequest) (*DeclineRelationResponse, error)
+	GetRequests(context.Context, *GetRelationsRequestRequest) (*GetRelationsRequestResponse, error)
+	Get(context.Context, *GetRelationsRequest) (*GetRelationsResponse, error)
 	mustEmbedUnimplementedRelationServiceServer()
 }
 
@@ -90,6 +114,12 @@ func (UnimplementedRelationServiceServer) Submit(context.Context, *SubmitRelatio
 }
 func (UnimplementedRelationServiceServer) Decline(context.Context, *DeclineRelationRequest) (*DeclineRelationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Decline not implemented")
+}
+func (UnimplementedRelationServiceServer) GetRequests(context.Context, *GetRelationsRequestRequest) (*GetRelationsRequestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRequests not implemented")
+}
+func (UnimplementedRelationServiceServer) Get(context.Context, *GetRelationsRequest) (*GetRelationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedRelationServiceServer) mustEmbedUnimplementedRelationServiceServer() {}
 
@@ -158,6 +188,42 @@ func _RelationService_Decline_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RelationService_GetRequests_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRelationsRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RelationServiceServer).GetRequests(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RelationService_GetRequests_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RelationServiceServer).GetRequests(ctx, req.(*GetRelationsRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RelationService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRelationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RelationServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RelationService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RelationServiceServer).Get(ctx, req.(*GetRelationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RelationService_ServiceDesc is the grpc.ServiceDesc for RelationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +242,14 @@ var RelationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Decline",
 			Handler:    _RelationService_Decline_Handler,
+		},
+		{
+			MethodName: "GetRequests",
+			Handler:    _RelationService_GetRequests_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _RelationService_Get_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

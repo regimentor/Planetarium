@@ -1,8 +1,8 @@
 package services
 
 import (
-	"aliens/pkg/api"
 	"context"
+	"github.com/regimentor/planetarium/backend/services/aliens/pkg/api"
 )
 
 type ManagerService struct {
